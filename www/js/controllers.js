@@ -1,6 +1,6 @@
 angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderCards', 'candidateSwipe.services'])
 
-.controller('DiscoverCtrl', function($scope, TDCardDelegate, Candidate, User) {
+.controller('DiscoverCtrl', function($scope, TDCardDelegate, SERVER, Candidate, User) {
 
   Candidate.getCandidates().then(function(){
       $scope.currentCandidates = Array.prototype.slice.call(Candidate.queue, 0, 2);
@@ -23,15 +23,15 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
 
   $scope.retrieveImage = function(img){
     if(img.length > 0)
-      return './img/CandidateImages/' + img;
+      return SERVER.url + SERVER.imagePath  + img;
     else {
-      return './img/CandidateImages/Unknown.jpg';
+      return SERVER.url + SERVER.imagePath + 'Unknown.jpg';
     }
   }
 
 })
 
-.controller('ResultsCtrl', function($scope, User, Candidate) {
+.controller('ResultsCtrl', function($scope, SERVER, User, Candidate) {
 
   $scope.results = User.results;
 
@@ -42,9 +42,9 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
 
   $scope.retrieveImage = function(img){
     if(img.length > 0)
-      return './img/CandidateImages/' + img;
+      return SERVER.url + SERVER.imagePath + img;
     else {
-      return './img/CandidateImages/Unknown.jpg';
+      return SERVER.url + SERVER.imagePath + 'Unknown.jpg';
     }
   }
 })

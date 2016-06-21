@@ -58,6 +58,7 @@ angular.module('candidateSwipe', ['ionic', 'candidateSwipe.controllers'])
 
 .constant('SERVER', {
   // Local server
-  url: 'http://localhost:3000'
+  url: 'http://localhost:3000',
+  imagePath: '/images/Candidates/'
 
 });
