@@ -1,0 +1,15 @@
+<ion-view view-title="Results" class="results-page">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="candidate in results" class="item-avatar" >
+        <img ng-src="{{retrieveImage(candidate.image)}}">
+        <h2>{{ candidate.name }}</h2>
+        <p>{{ candidate.party }}</p>
+        <ion-option-button class="button-assertive"
+                       ng-click="removeCandidate(candidate, $index)">
+          <i class="ion-minus-circled"></i>
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

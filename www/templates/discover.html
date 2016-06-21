@@ -1,0 +1,95 @@
+<ion-view view-title="Discover" class="discover-page">
+
+  <ion-content scroll="false">
+
+    <section class = "discover-candidateContainer">
+
+        <div class = "row discover-header">
+          <div class = "col text-center">
+            <h3>{{currentCandidates[0].category}} - {{currentCandidates[0].locality}}</h3>
+          </div>
+        </div>
+        <div class = "row discover-row" >
+            <div ng-repeat="candidate in currentCandidates" class="col text-center"  >
+
+            <td-cards class="text-center">
+                <td-card   on-swipe-left="cardSwiped($index)" on-swipe-right="cardSwiped($index)" class="card-{{$index}}">
+
+                    <img ng-src="{{retrieveImage(candidate.image)}}">
+                    <h3>{{candidate.name}}</h3>
+                    <p>{{candidate.party}}</p>
+                  </td-card>
+              </td-cards>
+
+
+
+
+            </div>
+          </div>
+            <!--
+            <td-card ng-repeat="candidate in currentCandidates" on-destroy="candidateDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
+              <div class="col text-center item item-image" ng-controller="CardCtrl">
+                <img ng-src="./img/CandidateImages/{{candidate.image}}">
+                <h2 style="margin-top: 10px;">{{candidate.name}}</h2>
+                <p style="margin-top: 5px;">{{candidate.party}}</p>
+              </div>
+            </td-card>
+
+         </td-cards> -->
+          <!--
+          <div class = "col text-center item item-image">
+                    <img ng-src="./img/CandidateImages/{{ currentCandidates[0].image}}" width="220" height="299">
+                    <h2 style="margin-top: 10px;">{{ currentCandidates[0].name}}</h2>
+                    <p style="margin-top: 5px;">{{ currentCandidates[0].party}}</p>
+          </div>
+          <div class = "col text-center item item-image">
+                      <img ng-src="./img/CandidateImages/{{ currentCandidates[1].image}}" width="220" height="299">
+                      <h2 style="margin-top: 10px;">{{currentCandidates[1].name}}</h2>
+                      <p style="margin-top: 5px;">{{ currentCandidates[1].party}}</p>
+          </div>
+
+-->
+
+        <div class="row discover-footer">
+         <div class="col text-center">
+            <a ng-click="sendFeedback(true)">
+              <i class="icon ion-close"></i>
+              <span style="color:black;">Skip</span>
+            </a>
+          </div>
+        </div>
+    </section>
+<!--
+    <td-cards>
+            <td-card ng-repeat="candidate in currentCandidates" on-destroy="candidateDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
+              <div class="col text-center item item-image" ng-controller="CardCtrl">
+                <img ng-src="./img/CandidateImages/{{candidate.image}}">
+                <h2 style="margin-top: 10px;">{{candidates.name}}</h2>
+                <p style="margin-top: 5px;">{{candidates.party}}</p>
+              </div>
+            </td-card>
+    </td-cards>
+-->
+
+    <!--
+    <h1>{{currentCandidate.category}} - {{currentCandidate.locality}}</h1>
+    <div class="list card current-song">
+
+    <div class="item item-image">
+      <img ng-src="./img/CandidateImages/{{ currentCandidate.image}}" width="220" height="299">
+    </div>
+
+    <div class="item  tabs tabs-secondary tabs-icon-left">
+      <a class="tab-item">
+        <h2>{{ currentCandidate.name }}</h2>
+        <p>{{ currentCandidate.party }}</p>
+      </a>
+    </div>
+-->
+
+
+
+
+  </ion-content>
+
+</ion-view>
