@@ -1,8 +1,8 @@
 <ion-view view-title="Discover" class="discover-page">
 
   <ion-content scroll="false">
-
-    <section class = "discover-candidateContainer">
+    <div style="text-align:center;font-weight:bold; margin-top: 100px" ng-if="!cardsExist()"> The card deck is complete.</div>
+    <section class = "discover-candidateContainer" ng-if="cardsExist()">
 
         <div class = "row discover-header">
           <div class = "col text-center">
@@ -12,31 +12,33 @@
         <div class = "row discover-row" >
             <div ng-repeat="candidate in currentCandidates" class="col text-center"  >
 
-            <td-cards class="text-center">
-                <td-card   on-swipe-left="cardSwiped($index)" on-swipe-right="cardSwiped($index)" class="card-{{$index}}">
+            <td-cards delegate-handle="cards" class="text-center">
+                <td-card  on-destroy="cardDestroyed($index)" on-snap-back="cardSnapBack($index)" on-swipe-right="cardSwiped($index)" on-swipe-left="cardSwiped($index)"  on-partial-swipe="cardPartialSwipe($index)" class="card-{{$index}}">
 
+               <div>
+                   <div class="no-text overlayBox"><div class="noBox boxed"></div></div>
                     <img ng-src="{{retrieveImage(candidate.image)}}">
                     <h3>{{candidate.name}}</h3>
                     <p>{{candidate.party}}</p>
+                    <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe"></div></div>
+              </div>
+        <!--        <div class="title">
+                  <h3>{{candidate.name}}</h3>
+                  <p>{{candidate.party}}</p>
+              </div> -->
+    <!--
+                    <img ng-src="{{retrieveImage(candidate.image)}}">
+                    <h3>{{candidate.name}}</h3>
+                    <p>{{candidate.party}}</p>
+    -->
                   </td-card>
               </td-cards>
-
-
-
-
             </div>
           </div>
-            <!--
-            <td-card ng-repeat="candidate in currentCandidates" on-destroy="candidateDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)" on-partial-swipe="cardPartialSwipe(amt)" class="card-{{$index}}">
-              <div class="col text-center item item-image" ng-controller="CardCtrl">
-                <img ng-src="./img/CandidateImages/{{candidate.image}}">
-                <h2 style="margin-top: 10px;">{{candidate.name}}</h2>
-                <p style="margin-top: 5px;">{{candidate.party}}</p>
-              </div>
-            </td-card>
 
-         </td-cards> -->
+
           <!--
+
           <div class = "col text-center item item-image">
                     <img ng-src="./img/CandidateImages/{{ currentCandidates[0].image}}" width="220" height="299">
                     <h2 style="margin-top: 10px;">{{ currentCandidates[0].name}}</h2>

@@ -1,7 +1,11 @@
 
-angular.module('candidateSwipe', ['ionic', 'candidateSwipe.controllers'])
+angular.module('candidateSwipe', [
+  'ionic',
+ 'LocalStorageModule',
+ 'candidateSwipe.services',
+ 'candidateSwipe.controllers'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, Candidate) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -17,41 +21,80 @@ angular.module('candidateSwipe', ['ionic', 'candidateSwipe.controllers'])
       StatusBar.styleDefault();
     }
   });
+
+
+
+
 })
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
 
-  .state('tab', {
-    url: '/tab',
+  .state('app', {
+    url: "/app",
     abstract: true,
-    templateUrl: 'templates/tabs.html',
-    controller: 'TabsCtrl'
+    templateUrl: "templates/menu.html",
+    controller: 'AppCtrl',
+    resolve: {
+      resolvedResults: function(User, $q) {
+          var deferred = $q.defer();
+          User.checkSession().then(function(res){
+          deferred.resolve([User.candidatesAvail, User.results]);
+        })
+        return deferred.promise;
+      }
+    },
+   onEnter: function($state, auth, Candidate){
+       if (!auth.isLoggedIn())
+       {
+
+         $state.go('home');
+       }
+
+     }
+
   })
 
 
-  .state('tab.discover', {
-    url: '/discover',
+  .state('app.discover', {
+    url: "/discover",
     views: {
       'tab-discover': {
-        templateUrl: 'templates/discover.html',
-        controller: 'DiscoverCtrl'
+        templateUrl: "templates/discover.html",
+        controller: "DiscoverCtrl"
       }
     }
   })
 
-  .state('tab.results', {
-      url: '/results',
-      views: {
-        'tab-results': {
-          templateUrl: 'templates/results.html',
-          controller: 'ResultsCtrl'
-        }
+  .state('app.results', {
+    url: "/results",
+    views: {
+      'tab-results': {
+        templateUrl: "templates/results.html",
+        controller: "ResultsCtrl"
       }
-    })
+    },
+
+  })
+
+  .state('home', {
+    url: '/',
+    templateUrl: "templates/login.html",
+    controller: "AppCtrl",
+   onEnter: function($state, User){
+      User.checkSession().then(function(hasSession) {
+        if (hasSession)
+        {
+
+          $state.go('app.discover');
+        }
+      });
+
+    }
+
+  });
 
 
-  // If none of the above states are matched, use this as the fallback:
   $urlRouterProvider.otherwise('/');
 
 })
