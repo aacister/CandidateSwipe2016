@@ -52,6 +52,19 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
       });
   };
 
+  $scope.submitForm = function(signingUp) {
+    User.auth($scope.user, signingUp).then(function(){
+      $state.go('app.discover');
+
+    }, function() {
+      alert('Try again.');
+
+    });
+  }
+
+  $scope.currentUser = function(){
+    return User.currentUser();
+  };
   $scope.isLoggedIn = function(){
     return auth.isLoggedIn();
   };
@@ -64,41 +77,12 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
 
   };
 
+
+
 })
-.controller('AuthCtrl', [
-        '$scope',
-        '$state',
-        'auth',
-
-        function($scope, $state, auth) {
-
-            $scope.user = {};
-
-
-            $scope.register = function() {
-                auth.register($scope.user).error(function(error) {
-                    $scope.error = error;
-                }).then(function() {
-                    $state.go('profile');
-                });
-            };
-
-            $scope.logIn = function() {
-                auth.logIn($scope.user).error(function(error) {
-                    $scope.error = error;
-                }).then(function() {
-                    $state.go('profile');
-                });
-            };
-
-
-
-        }
-    ])
 
 .controller('DiscoverCtrl', function($scope, $ionicLoading, $timeout, TDCardDelegate, SERVER, Candidate, User, resolvedResults) {
-//  $scope.currentCandidates = Array.prototype.slice.call(resolvedResults[0], 0, 2);
-  var showLoading = function() {
+var showLoading = function() {
     $ionicLoading.show({
       template: '<ion-spinner icon="spiral" ></ion-spinner>',
       noBackdrop: true
@@ -160,7 +144,7 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
 })
 
 .controller('ResultsCtrl', function($scope, SERVER, User, Candidate, resolvedResults) {
-//  console.log('Inside ResultsCtrl. resolvedResults = ' + JSON.stringify(resolvedResults));
+
   $scope.results = resolvedResults[1];
 
   $scope.removeCandidate = function(candidate, index) {
@@ -183,7 +167,7 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
   }
 })
 
-.controller('TabsCtrl', function($scope, $window, User, auth) {
+.controller('TabsCtrl', function($scope, User, auth) {
   $scope.resultsCount =  User.resultsCount;
 
   $scope.enteringResults = function() {
@@ -194,4 +178,6 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
  $scope.isLoggedIn = function(){
    return auth.isLoggedIn();
  };
+
+
 });

@@ -26,8 +26,8 @@ angular.module('candidateSwipe', [
 
 
 })
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
   .state('app', {
@@ -37,6 +37,7 @@ angular.module('candidateSwipe', [
     controller: 'AppCtrl',
     resolve: {
       resolvedResults: function(User, $q) {
+          console.log('State: app.  Resolve.');
           var deferred = $q.defer();
           User.checkSession().then(function(res){
           deferred.resolve([User.candidatesAvail, User.results]);
@@ -44,10 +45,10 @@ angular.module('candidateSwipe', [
         return deferred.promise;
       }
     },
-   onEnter: function($state, auth, Candidate){
+   onEnter: function($state, $location, auth, Candidate){
+      console.log('State: app. OnEnter.');
        if (!auth.isLoggedIn())
        {
-
          $state.go('home');
        }
 
@@ -81,12 +82,13 @@ angular.module('candidateSwipe', [
     url: '/',
     templateUrl: "templates/login.html",
     controller: "AppCtrl",
-   onEnter: function($state, User){
+   onEnter: function($state, $location, User){
+
       User.checkSession().then(function(hasSession) {
         if (hasSession)
         {
 
-          $state.go('app.discover');
+          $state.go('app.discover',{}, {reload: true});
         }
       });
 

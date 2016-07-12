@@ -14,7 +14,7 @@
       <div class="padding-left padding-right">
         <div>
           <label class="item item-input">
-            <input type="text" ng-model="user.username" placeholder="Username" required>
+            <input type="text" ng-model="user.username" placeholder="Username" placeholder="Enter your {{ form.signingUp ? 'desired' : 'Candidate Swipe 2016' }} username" required>
           </label>
         </div>
         <br/>
@@ -26,9 +26,15 @@
       </div>
 
       <div class="padding-left padding-right">
-        <button class="button button-block action-button button-positive"  ng-click="signIn()">Sign In</button>
+        <button class="button button-block action-button" ng-class="{'button-positive': !form.signingUp, 'button-balanced': form.signingUp}" ng-click="submitForm(form.signingUp)">
+          {{ form.signingUp ? 'Register' : 'Sign in' }}
+        </button>
       </div>
     </div>
+    <div class="padding signup-opt" ng-click="form.signingUp = !form.signingUp">
+     {{ form.signingUp ? 'Have an account? Sign in!' : 'Need an account?' }}
+   </div>
+
   </form>
   </ion-content>
 </ion-view>

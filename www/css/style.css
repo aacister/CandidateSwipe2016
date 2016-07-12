@@ -20,9 +20,19 @@
 }
 
 
+
+.login-page .signup-opt {
+  color:#fff;
+  padding:15px;
+  margin-top:20px;
+  font-weight: bold;
+  cursor:pointer;
+}
+
 .login-page .action-button {
   font-weight: bolder;
 }
+
 
 /* Discover page */
 .discover-candidateContainer {

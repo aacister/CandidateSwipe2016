@@ -224,17 +224,25 @@ angular.module('candidateSwipe.services', ['http-auth-interceptor'])
   return defer.promise;
 };
 
-o.register = function(user) {
-    return $http.post(SERVER.url + '/register', user).success(function(data) {
-        auth.saveToken(data.token);
-    });
-};
+  o.auth = function(user, signingUp) {
 
-o.logIn = function(user) {
-    return $http.post(SERVER.url + '/login', user).success(function(data) {
-        o.setSession(data.token);
-    });
-};
+    var authRoute;
+
+    if (signingUp) {
+      console.log('Register');
+      authRoute = 'register';
+    } else {
+      console.log('Login');
+      authRoute = 'login'
+    }
+
+    return $http.post(SERVER.url + '/' + authRoute, user).success(function(data){
+      o.setSession(data.token);
+    })
+
+
+  }
+
 
 o.logOut = function() {
     var deferred = $q.defer();
