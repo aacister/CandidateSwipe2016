@@ -11,6 +11,8 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
   })
 .controller('AppCtrl', function($scope, $state, $ionicModal, $ionicSideMenuDelegate, User, auth) {
 
+  $scope.user = {};
+  $scope.error = '';
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -32,32 +34,20 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
     $ionicSideMenuDelegate.toggleLeft();
   };
 
-  $scope.user = {};
 
 
-  $scope.register = function() {
-      auth.register($scope.user).error(function(error) {
-          $scope.error = error;
-      }).then(function() {
-          $state.go('app.discover');
-      });
-  };
-
-  $scope.signIn = function() {
-      User.logIn($scope.user).error(function(error) {
-          $scope.error = error;
-      }).then(function() {
-          $state.go('app.discover');
-      }, function(){
-      });
-  };
+  var clearForm = function(){
+    $scope.user = {};
+    $scope.error = '';
+  }
 
   $scope.submitForm = function(signingUp) {
     User.auth($scope.user, signingUp).then(function(){
+      clearForm();
       $state.go('app.discover');
 
     }, function() {
-      alert('Try again.');
+      $scope.error="Try again."
 
     });
   }

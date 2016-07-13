@@ -110,6 +110,7 @@ angular.module('candidateSwipe.services', ['http-auth-interceptor'])
       deferred.reject(false);
    o.results.unshift(candidate);
    o.newResults++;
+   console.log('Bearer Token: ' + auth.getToken());
    //Persist
    $http.put(SERVER.url + '/user/' + o.currentUserId() + '/results/' + candidate._id + '/vote',  {
                     headers: {
@@ -128,12 +129,13 @@ angular.module('candidateSwipe.services', ['http-auth-interceptor'])
       deferred.reject(false);
 
     o.results.splice(index, 1);
+    console.log('Bearer Token: ' + auth.getToken());
     $http.delete(SERVER.url + '/user/' + o.currentUserId() + '/results/' + candidate._id, {
                     headers: {
                         Authorization: 'Bearer ' + auth.getToken()
                     }
                 }).success(function(user){
-                  console.log('User removed: ' + JSON.stringify(o.results));
+
                   deferred.resolve(user);
                 });
 
@@ -181,7 +183,6 @@ angular.module('candidateSwipe.services', ['http-auth-interceptor'])
 
   o.setSession = function(token){
     var deferred = $q.defer();
-    console.log('Setting Session.');
     auth.saveToken(token);
     o.userName= o.currentUser();
     o.newResults = 0;
@@ -225,23 +226,28 @@ angular.module('candidateSwipe.services', ['http-auth-interceptor'])
 };
 
   o.auth = function(user, signingUp) {
-
+    var deferred = $q.defer();
     var authRoute;
 
     if (signingUp) {
-      console.log('Register');
       authRoute = 'register';
     } else {
-      console.log('Login');
       authRoute = 'login'
     }
 
-    return $http.post(SERVER.url + '/' + authRoute, user).success(function(data){
+    $http.post(SERVER.url + '/' + authRoute, user)
+    .success(function(data){
+      console.log('Success');
       o.setSession(data.token);
-    })
+      deferred.resolve(data.token);
+    }).error(function(msg){
+      console.log('rejected.');
+      deferred.reject(msg);
+    });
 
+    return deferred.promise;
 
-  }
+  };
 
 
 o.logOut = function() {
