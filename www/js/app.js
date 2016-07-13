@@ -104,7 +104,8 @@ angular.module('candidateSwipe', [
 .constant('SERVER', {
   // Local server
 //  url: 'http://localhost:3000',
-  url: 'http://candidateswipe2016.herokuapp.com',
+
+  url: 'http://candidateswipe2016api.com',
   imagePath: '/images/Candidates/'
 
 });
