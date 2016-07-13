@@ -47,6 +47,7 @@ angular.module('candidateSwipe.controllers', ['ionic', 'ionic.contrib.ui.tinderC
       $state.go('app.discover');
 
     }, function() {
+      alert('Try again.');
       $scope.error="Try again."
 
     });
