@@ -241,7 +241,7 @@ angular.module('candidateSwipe.services', ['http-auth-interceptor'])
       o.setSession(data.token);
       deferred.resolve(data.token);
     }).error(function(msg){
-      console.log('rejected.');
+      console.log('rejected.:' + msg);
       deferred.reject(msg);
     });
 
