@@ -6,5 +6,6 @@ Sessions are stored within Window's LocalStorage.
 Data persisted to MongoDB.
 User swipes preferred candidate in 2016 political races. 
 
-Published to:
+Published to: (Best viewed within emulator, or on mobile phone browser)
 https://candidateswipe2016client.herokuapp.com 
+
