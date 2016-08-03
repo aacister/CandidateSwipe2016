@@ -5,3 +5,6 @@ CandidateSwipeAPI utilizes Node.js, Express.js, and MongoDB.
 Sessions are stored within Window's LocalStorage.
 Data persisted to MongoDB.
 User swipes preferred candidate in 2016 political races. 
+
+Published to:
+https://candidateswipe2016client.herokuapp.com 
